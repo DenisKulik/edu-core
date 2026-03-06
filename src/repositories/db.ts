@@ -1,8 +1,8 @@
 import mongoose from "mongoose";
 import { Course, UserDBType } from "../types";
 
-const mongoUri = process.env.mongoUri || "mongodb://127.0.0.1:27017";
-const mongoDbName = process.env.mongoDbName || "school";
+const mongoUri = process.env.MONGO_URI;
+const mongoDbName = process.env.MONGO_DB_NAME;
 
 const userScheme = new mongoose.Schema({
   userName: { type: String, required: true },
