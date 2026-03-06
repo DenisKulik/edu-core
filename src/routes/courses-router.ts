@@ -49,8 +49,8 @@ export const getCoursesRouter = () => {
 
       if (!foundCourse) {
         res
-          .sendStatus(HttpStatuses.NOT_FOUND)
-          .send({ message: "Course not found" });
+          .status(HttpStatuses.NOT_FOUND)
+          .json({ message: "Course not found" });
         return;
       }
 
@@ -89,8 +89,8 @@ export const getCoursesRouter = () => {
 
       if (!updatedCourse) {
         res
-          .sendStatus(HttpStatuses.NOT_FOUND)
-          .send({ message: "Course not found" });
+          .status(HttpStatuses.NOT_FOUND)
+          .json({ message: "Course not found" });
         return;
       }
 
@@ -108,8 +108,8 @@ export const getCoursesRouter = () => {
 
       if (!isDeletedCourse) {
         res
-          .sendStatus(HttpStatuses.NOT_FOUND)
-          .send({ message: "Course not found" });
+          .status(HttpStatuses.NOT_FOUND)
+          .json({ message: "Course not found" });
         return;
       }
 

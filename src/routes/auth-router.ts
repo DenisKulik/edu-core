@@ -18,7 +18,7 @@ export const getAuthRouter = () => {
     if (user) {
       res.status(HttpStatuses.CREATED).send({ message: "Success" });
     } else {
-      res.sendStatus(HttpStatuses.BAD_REQUEST).send({ message: "Bad request" });
+      res.status(HttpStatuses.BAD_REQUEST).json({ message: "Bad request" });
     }
   });
 
@@ -32,9 +32,7 @@ export const getAuthRouter = () => {
       const token = await jwtService.createJWT(user);
       res.status(HttpStatuses.CREATED).send({ message: "Success", token });
     } else {
-      res
-        .sendStatus(HttpStatuses.UNAUTHORIZED)
-        .send({ message: "Unauthorized" });
+      res.status(HttpStatuses.UNAUTHORIZED).json({ message: "Unauthorized" });
     }
   });
 
