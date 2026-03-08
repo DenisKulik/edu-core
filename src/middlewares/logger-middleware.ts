@@ -1,21 +1,13 @@
 import { Request, Response, NextFunction } from "express";
+import { writeLog } from "../utils/file-logger";
 
 export const loggerMiddleware = (
   req: Request,
   res: Response,
   next: NextFunction,
 ) => {
-  const start = Date.now();
-
-  console.log(`[${new Date().toISOString()}] ${req.method} ${req.originalUrl}`);
-
-  res.on("finish", () => {
-    const duration = Date.now() - start;
-
-    console.log(
-      `[${req.method}] ${req.originalUrl} - ${res.statusCode} - ${duration}ms`,
-    );
-  });
+  const logMessage = `${req.method} ${req.url}`;
+  writeLog(logMessage);
 
   next();
 };
