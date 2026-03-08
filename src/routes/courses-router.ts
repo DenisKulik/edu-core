@@ -17,8 +17,7 @@ import {
 } from "../types";
 import { CoursesService, ICoursesService } from "../domain";
 import { courseValidator } from "../utils";
-import { inputValidationMiddleware } from "../middlewares";
-import { authMiddleware } from "../middlewares/auth-middleware";
+import { authMiddleware, inputValidationMiddleware } from "../middlewares";
 
 export const getCoursesRouter = () => {
   const router = Router();

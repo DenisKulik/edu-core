@@ -1,8 +1,6 @@
 import express, { Express } from "express";
 import { getAuthRouter, getCoursesRouter, getTestsRouter } from "./routes";
-import { loggerMiddleware } from "./middlewares/logger-middleware";
-import { notFoundMiddleware } from "./middlewares/not-found-middleware";
-import { errorMiddleware } from "./middlewares/error-middleware";
+import { loggerMiddleware, notFoundMiddleware, errorMiddleware } from "./middlewares";
 
 const app: Express = express();
 
