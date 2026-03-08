@@ -1,7 +1,8 @@
 import { getCourseViewModel } from "../utils";
 import { CourseUpdateModel, CourseViewModel } from "../models";
 import { Course } from "../types";
-import { Sort, UpdateResult } from "mongodb";
+import { UpdateResult } from "mongodb";
+import { SortOrder } from "mongoose";
 import { CourseModel } from "./db";
 
 export interface ICoursesRepository {
@@ -26,7 +27,7 @@ export class CoursesRepository implements ICoursesRepository {
     direction?: string,
   ): Promise<CourseViewModel[]> {
     const filter: any = {};
-    const sort: Sort = {};
+    const sort: Record<string, SortOrder> = {};
 
     if (title) {
       filter.title = title;

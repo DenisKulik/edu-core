@@ -17,8 +17,7 @@ import {
 } from "../types";
 import { CoursesService, ICoursesService } from "../domain";
 import { courseValidator } from "../utils";
-import { inputValidationMiddleware } from "../middlewares";
-import { authMiddleware } from "../middlewares/auth-middleware";
+import { authMiddleware, inputValidationMiddleware } from "../middlewares";
 
 export const getCoursesRouter = () => {
   const router = Router();
@@ -49,8 +48,8 @@ export const getCoursesRouter = () => {
 
       if (!foundCourse) {
         res
-          .sendStatus(HttpStatuses.NOT_FOUND)
-          .send({ message: "Course not found" });
+          .status(HttpStatuses.NOT_FOUND)
+          .json({ message: "Course not found" });
         return;
       }
 
@@ -89,8 +88,8 @@ export const getCoursesRouter = () => {
 
       if (!updatedCourse) {
         res
-          .sendStatus(HttpStatuses.NOT_FOUND)
-          .send({ message: "Course not found" });
+          .status(HttpStatuses.NOT_FOUND)
+          .json({ message: "Course not found" });
         return;
       }
 
@@ -108,8 +107,8 @@ export const getCoursesRouter = () => {
 
       if (!isDeletedCourse) {
         res
-          .sendStatus(HttpStatuses.NOT_FOUND)
-          .send({ message: "Course not found" });
+          .status(HttpStatuses.NOT_FOUND)
+          .json({ message: "Course not found" });
         return;
       }
 

@@ -10,7 +10,7 @@ export const inputValidationMiddleware = (
 ) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
-    res.sendStatus(HttpStatuses.BAD_REQUEST).send({ errors: errors.array() });
+    res.status(HttpStatuses.BAD_REQUEST).json({ errors: errors.array() });
     return;
   } else {
     next();
