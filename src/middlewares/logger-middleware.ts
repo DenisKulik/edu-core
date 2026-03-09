@@ -6,8 +6,13 @@ export const loggerMiddleware = (
   res: Response,
   next: NextFunction,
 ) => {
-  const logMessage = `${req.method} ${req.url}`;
-  writeLog(logMessage);
+  const start = Date.now();
+
+  res.on("finish", () => {
+    const duration = Date.now() - start;
+    const logMessage = `${req.method} ${req.ip} ${req.url} ${res.statusCode} ${duration}ms`;
+    writeLog(logMessage);
+  });
 
   next();
 };
