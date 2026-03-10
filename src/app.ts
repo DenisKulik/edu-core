@@ -11,6 +11,7 @@ import {
   errorMiddleware,
 } from "./middlewares";
 import {} from "./routes/logs-router";
+import { registerEvents } from "./events";
 
 const app: Express = express();
 
@@ -31,5 +32,7 @@ app.use("/logs", logsRouter);
 
 app.use(notFoundMiddleware);
 app.use(errorMiddleware);
+
+registerEvents();
 
 export default app;

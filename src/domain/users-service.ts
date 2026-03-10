@@ -1,6 +1,7 @@
 import bcrypt from "bcrypt";
 import { ObjectId } from "mongodb";
 import { UsersRepository } from "../repositories";
+import { eventBus } from "../utils";
 
 export class UsersService {
   repository = new UsersRepository();
@@ -17,6 +18,8 @@ export class UsersService {
       createdAt: new Date(),
     };
 
+    eventBus.emit("user:created", user);
+
     return this.repository.createUser(user);
   }
 
@@ -32,6 +35,8 @@ export class UsersService {
     if (passwordHash !== user.passwordHash) {
       return false;
     }
+
+    eventBus.emit("user:login", user);
 
     return user;
   }
