@@ -1,8 +1,9 @@
 import fs from "fs";
 import path from "path";
 
+const currentDate = new Date().toISOString().split("T")[0];
 const logsDir = path.join(process.cwd(), "logs");
-const logFile = path.join(logsDir, "access.log");
+const logFile = path.join(logsDir, `access-${currentDate}.log`);
 
 if (!fs.existsSync(logsDir)) {
   fs.mkdirSync(logsDir);
