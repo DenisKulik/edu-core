@@ -2,6 +2,7 @@ import { Request, Response } from "express";
 import { UsersService } from "../../domain/users-service";
 import { JwtService } from "../../application/jwt-service";
 import { HttpStatuses } from "../../types";
+import { loginSchema, registerSchema } from "./auth.schema";
 
 export class AuthController {
   constructor(
@@ -10,17 +11,23 @@ export class AuthController {
   ) {}
 
   async register(req: Request, res: Response) {
-    const { login, email, password } = req.body;
+    const result = registerSchema.safeParse(req.body);
 
-    if (!login.trim() || !email.trim() || !password.trim()) {
-      res.status(HttpStatuses.BAD_REQUEST).json({ message: "Bad request" });
+    if (!result.success) {
+      res.status(HttpStatuses.BAD_REQUEST).send({
+        errors: result.error.issues,
+      });
       return;
     }
+
+    const { login, email, password } = result.data;
 
     const user = await this.usersService.createUser(login, email, password);
 
     if (!user) {
-      res.status(HttpStatuses.BAD_REQUEST).json({ message: "Bad request" });
+      res
+        .status(HttpStatuses.BAD_REQUEST)
+        .json({ message: "Something went wrong" });
       return;
     }
 
@@ -30,12 +37,17 @@ export class AuthController {
   }
 
   async login(req: Request, res: Response) {
-    const { loginOrEmail, password } = req.body;
+    const result = loginSchema.safeParse(req.body);
+    console.log("result", result);
 
-    if (!loginOrEmail.trim() || !password.trim()) {
-      res.status(HttpStatuses.BAD_REQUEST).json({ message: "Bad request" });
+    if (!result.success) {
+      res.status(HttpStatuses.BAD_REQUEST).send({
+        errors: result.error.issues,
+      });
       return;
     }
+
+    const { loginOrEmail, password } = result.data;
 
     const user = await this.usersService.checkCredentials(
       loginOrEmail,
