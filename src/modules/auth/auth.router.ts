@@ -5,6 +5,7 @@ import { validationMiddleware } from "../../middlewares";
 
 export const getAuthRouter = (controller: AuthController) => {
   const router = Router();
+
   router.post(
     "/register",
     validationMiddleware(registerSchema),

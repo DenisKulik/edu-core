@@ -1,23 +1,19 @@
-import {
-  CourseCreateModel,
-  CourseUpdateModel,
-  CourseViewModel,
-} from "../models";
-import { Course } from "../types";
-import { CoursesRepository, ICoursesRepository } from "../repositories";
+import { Course } from "./courses.entity";
+import { CourseCreateDTO, CourseUpdateDTO, CourseViewDTO } from "./courses.dto";
+import { CoursesRepository, ICoursesRepository } from "./courses.repository";
 
 export interface ICoursesService {
   findCourses(
     title?: string,
     sortBy?: string,
     direction?: string,
-  ): Promise<CourseViewModel[]>;
-  findCourseById(id: number): Promise<CourseViewModel | null>;
-  createCourse(course: CourseCreateModel): Promise<CourseViewModel>;
+  ): Promise<CourseViewDTO[]>;
+  findCourseById(id: number): Promise<CourseViewDTO | null>;
+  createCourse(course: CourseCreateDTO): Promise<CourseViewDTO>;
   updateCourse(
     id: number,
-    course: CourseUpdateModel,
-  ): Promise<CourseViewModel | null>;
+    course: CourseUpdateDTO,
+  ): Promise<CourseViewDTO | null>;
   deleteCourse(id: number): Promise<boolean>;
 }
 
@@ -28,15 +24,15 @@ export class CoursesService implements ICoursesService {
     title?: string,
     sortBy?: string,
     direction?: string,
-  ): Promise<CourseViewModel[]> {
+  ): Promise<CourseViewDTO[]> {
     return this.repository.findCourses(title, sortBy, direction);
   }
 
-  async findCourseById(id: number): Promise<CourseViewModel | null> {
+  async findCourseById(id: number): Promise<CourseViewDTO | null> {
     return this.repository.findCourseById(id);
   }
 
-  async createCourse(course: CourseCreateModel): Promise<CourseViewModel> {
+  async createCourse(course: CourseCreateDTO): Promise<CourseViewDTO> {
     const createdCourse: Omit<Course, "_id"> = {
       id: new Date().getTime(),
       title: course.title,
@@ -49,8 +45,8 @@ export class CoursesService implements ICoursesService {
 
   async updateCourse(
     id: number,
-    course: CourseUpdateModel,
-  ): Promise<CourseViewModel | null> {
+    course: CourseUpdateDTO,
+  ): Promise<CourseViewDTO | null> {
     return this.repository.updateCourse(id, course);
   }
 

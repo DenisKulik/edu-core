@@ -1,5 +1,5 @@
 import express, { Express } from "express";
-import { getCoursesRouter, getLogsRouter, getTestsRouter } from "./routes";
+import { getLogsRouter, getTestsRouter } from "./routes";
 import {
   loggerMiddleware,
   notFoundMiddleware,
@@ -9,6 +9,11 @@ import { registerEvents } from "./events";
 import { UsersService } from "./domain";
 import { JwtService } from "./application";
 import { AuthController, getAuthRouter } from "./modules/auth";
+import {
+  CoursesController,
+  CoursesService,
+  getCoursesRouter,
+} from "./modules/courses";
 
 const app: Express = express();
 
@@ -19,12 +24,14 @@ app.use(jsonBodyMiddleware);
 
 const usersService = new UsersService();
 const jwtService = new JwtService();
+const coursesService = new CoursesService();
 
 const authController = new AuthController(usersService, jwtService);
+const coursesController = new CoursesController(coursesService);
 
-const coursesRouter = getCoursesRouter();
 const testsRouter = getTestsRouter();
 const authRouter = getAuthRouter(authController);
+const coursesRouter = getCoursesRouter(coursesController);
 const logsRouter = getLogsRouter();
 
 app.use("/auth", authRouter);

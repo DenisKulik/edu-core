@@ -1,5 +1,5 @@
 import { Request } from "express";
-import { ObjectId, WithId } from "mongodb";
+import { WithId } from "mongodb";
 
 declare global {
   namespace Express {
@@ -13,14 +13,6 @@ export type RequestBody<T> = Request<{}, {}, T>;
 export type RequestParams<T> = Request<T>;
 export type RequestQuery<T> = Request<{}, {}, {}, T>;
 export type RequestBodyParams<TBody, TParams> = Request<TParams, {}, TBody>;
-
-export type Course = WithId<{
-  _id: ObjectId;
-  id: number;
-  title: string;
-  price: number;
-  studentsCount: number;
-}>;
 
 export type UserDBType = WithId<{
   userName: string;

@@ -1,5 +1,6 @@
 import mongoose from "mongoose";
-import { Course, UserDBType } from "../types";
+import { UserDBType } from "../types";
+import { Course } from "../modules/courses";
 
 const mongoUri = process.env.MONGO_URI;
 const mongoDbName = process.env.MONGO_DB_NAME;

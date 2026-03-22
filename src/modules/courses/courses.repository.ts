@@ -1,22 +1,22 @@
-import { getCourseViewModel } from "../utils";
-import { CourseUpdateModel, CourseViewModel } from "../models";
-import { Course } from "../types";
+import { toCourseViewDto } from "./courses.mapper";
+import { Course } from "./courses.entity";
 import { UpdateResult } from "mongodb";
 import { SortOrder } from "mongoose";
-import { CourseModel } from "./db";
+import { CourseModel } from "../../repositories/db";
+import { CourseUpdateDTO, CourseViewDTO } from "./courses.dto";
 
 export interface ICoursesRepository {
   findCourses(
     title?: string,
     sortBy?: string,
     direction?: string,
-  ): Promise<CourseViewModel[]>;
-  findCourseById(id: number): Promise<CourseViewModel | null>;
-  createCourse(course: Omit<Course, "_id">): Promise<CourseViewModel>;
+  ): Promise<CourseViewDTO[]>;
+  findCourseById(id: number): Promise<CourseViewDTO | null>;
+  createCourse(course: Omit<Course, "_id">): Promise<CourseViewDTO>;
   updateCourse(
     id: number,
-    course: CourseUpdateModel,
-  ): Promise<CourseViewModel | null>;
+    course: CourseUpdateDTO,
+  ): Promise<CourseViewDTO | null>;
   deleteCourse(id: number): Promise<boolean>;
 }
 
@@ -25,7 +25,7 @@ export class CoursesRepository implements ICoursesRepository {
     title?: string,
     sortBy?: string,
     direction?: string,
-  ): Promise<CourseViewModel[]> {
+  ): Promise<CourseViewDTO[]> {
     const filter: any = {};
     const sort: Record<string, SortOrder> = {};
 
@@ -37,26 +37,26 @@ export class CoursesRepository implements ICoursesRepository {
     }
 
     const courses = await CourseModel.find(filter).sort(sort).lean();
-    return courses.map((dbCourse) => getCourseViewModel(dbCourse));
+    return courses.map((dbCourse) => toCourseViewDto(dbCourse));
   }
 
-  async findCourseById(id: number): Promise<CourseViewModel | null> {
+  async findCourseById(id: number): Promise<CourseViewDTO | null> {
     const foundCourse: Course | null = await CourseModel.findOne({ id });
-    return foundCourse ? getCourseViewModel(foundCourse) : null;
+    return foundCourse ? toCourseViewDto(foundCourse) : null;
   }
 
-  async createCourse(course: Omit<Course, "_id">): Promise<CourseViewModel> {
+  async createCourse(course: Omit<Course, "_id">): Promise<CourseViewDTO> {
     await CourseModel.create(course);
-    const createdCourse: CourseViewModel | null = await CourseModel.findOne({
+    const createdCourse: CourseViewDTO | null = await CourseModel.findOne({
       id: course.id,
     });
-    return getCourseViewModel(createdCourse as Course);
+    return toCourseViewDto(createdCourse as Course);
   }
 
   async updateCourse(
     id: number,
-    course: CourseUpdateModel,
-  ): Promise<CourseViewModel | null> {
+    course: CourseUpdateDTO,
+  ): Promise<CourseViewDTO | null> {
     const result: UpdateResult<Course> = await CourseModel.updateOne(
       { id },
       { $set: course },
@@ -66,11 +66,11 @@ export class CoursesRepository implements ICoursesRepository {
       return null;
     }
 
-    const updatedCourse: CourseViewModel | null = await CourseModel.findOne({
+    const updatedCourse: CourseViewDTO | null = await CourseModel.findOne({
       id,
     });
 
-    return getCourseViewModel(updatedCourse as Course);
+    return toCourseViewDto(updatedCourse as Course);
   }
 
   async deleteCourse(id: number): Promise<boolean> {
