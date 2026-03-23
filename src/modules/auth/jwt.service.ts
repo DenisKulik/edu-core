@@ -1,6 +1,6 @@
 import jwt from "jsonwebtoken";
-import { UserDBType } from "../types";
-import { settings } from "../settings";
+import { UserDBType } from "../../types";
+import { settings } from "../../settings";
 import { ObjectId } from "mongodb";
 
 export class JwtService {

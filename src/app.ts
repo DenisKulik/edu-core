@@ -1,19 +1,22 @@
 import express, { Express } from "express";
-import { getLogsRouter, getTestsRouter } from "./routes";
+import { getLogsRouter } from "./routes";
+import { getTestsRouter } from "./modules/tests";
 import {
   loggerMiddleware,
   notFoundMiddleware,
   errorMiddleware,
 } from "./middlewares";
 import { registerEvents } from "./events";
-import { UsersService } from "./domain";
-import { JwtService } from "./application";
+import { UsersService } from "./modules/users";
+import { JwtService } from "./modules/auth";
 import { AuthController, getAuthRouter } from "./modules/auth";
 import {
   CoursesController,
   CoursesService,
   getCoursesRouter,
 } from "./modules/courses";
+import { TestsService } from "./modules/tests/tests.service";
+import { TestsController } from "./modules/tests/tests.controller";
 
 const app: Express = express();
 
@@ -25,13 +28,15 @@ app.use(jsonBodyMiddleware);
 const usersService = new UsersService();
 const jwtService = new JwtService();
 const coursesService = new CoursesService();
+const testsService = new TestsService();
 
 const authController = new AuthController(usersService, jwtService);
 const coursesController = new CoursesController(coursesService);
+const testsController = new TestsController(testsService);
 
-const testsRouter = getTestsRouter();
 const authRouter = getAuthRouter(authController);
 const coursesRouter = getCoursesRouter(coursesController);
+const testsRouter = getTestsRouter(testsController);
 const logsRouter = getLogsRouter();
 
 app.use("/auth", authRouter);

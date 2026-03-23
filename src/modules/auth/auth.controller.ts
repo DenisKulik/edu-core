@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
-import { UsersService } from "../../domain/users-service";
-import { JwtService } from "../../application/jwt-service";
+import { UsersService } from "../users/users.service";
+import { JwtService } from "./jwt.service";
 import { HttpStatuses } from "../../types";
 
 export class AuthController {

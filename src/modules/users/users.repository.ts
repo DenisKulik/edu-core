@@ -1,6 +1,6 @@
 import { ObjectId } from "mongodb";
-import { UserDBType } from "../types";
-import { UserModel } from "./db";
+import { UserDBType } from "../../types";
+import { UserModel } from "../../db";
 
 export interface IUsersRepository {
   getAllUsers(): Promise<UserDBType[]>;

@@ -2,7 +2,7 @@ import { toCourseViewDto } from "./courses.mapper";
 import { Course } from "./courses.entity";
 import { UpdateResult } from "mongodb";
 import { SortOrder } from "mongoose";
-import { CourseModel } from "../../repositories/db";
+import { CourseModel } from "../../db";
 import { CourseUpdateDTO, CourseViewDTO } from "./courses.dto";
 
 export interface ICoursesRepository {

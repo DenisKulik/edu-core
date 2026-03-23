@@ -1,7 +1,7 @@
 import bcrypt from "bcrypt";
 import { ObjectId } from "mongodb";
-import { UsersRepository } from "../repositories";
-import { eventBus } from "../utils";
+import { UsersRepository } from "./users.repository";
+import { eventBus } from "../../utils";
 
 export class UsersService {
   repository = new UsersRepository();
