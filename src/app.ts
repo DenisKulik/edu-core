@@ -1,5 +1,4 @@
 import express, { Express } from "express";
-import { getLogsRouter } from "./routes";
 import { getTestsRouter } from "./modules/tests";
 import {
   loggerMiddleware,
@@ -17,6 +16,11 @@ import {
 } from "./modules/courses";
 import { TestsService } from "./modules/tests/tests.service";
 import { TestsController } from "./modules/tests/tests.controller";
+import {
+  getLogsRouter,
+  LogsController,
+  LogsService,
+} from "./modules/admin/logs";
 
 const app: Express = express();
 
@@ -29,15 +33,17 @@ const usersService = new UsersService();
 const jwtService = new JwtService();
 const coursesService = new CoursesService();
 const testsService = new TestsService();
+const logsService = new LogsService();
 
 const authController = new AuthController(usersService, jwtService);
 const coursesController = new CoursesController(coursesService);
 const testsController = new TestsController(testsService);
+const logsController = new LogsController(logsService);
 
 const authRouter = getAuthRouter(authController);
 const coursesRouter = getCoursesRouter(coursesController);
 const testsRouter = getTestsRouter(testsController);
-const logsRouter = getLogsRouter();
+const logsRouter = getLogsRouter(logsController);
 
 app.use("/auth", authRouter);
 app.use("/courses", coursesRouter);
