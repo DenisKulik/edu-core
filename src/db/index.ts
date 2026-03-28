@@ -14,9 +14,9 @@ const userScheme = new mongoose.Schema({
 });
 
 const courseScheme = new mongoose.Schema({
-  id: Number,
-  title: String,
-  price: Number,
+  id: { type: String, required: true },
+  title: { type: String, required: true },
+  price: { type: Number, required: true },
   studentsCount: Number,
 });
 

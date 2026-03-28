@@ -11,6 +11,7 @@ import { JwtService } from "./modules/auth";
 import { AuthController, getAuthRouter } from "./modules/auth";
 import {
   CoursesController,
+  CoursesRepository,
   CoursesService,
   getCoursesRouter,
 } from "./modules/courses";
@@ -29,9 +30,11 @@ export const jsonBodyMiddleware = express.json();
 app.use(loggerMiddleware);
 app.use(jsonBodyMiddleware);
 
+const coursesRepository = new CoursesRepository();
+
 const usersService = new UsersService();
 const jwtService = new JwtService();
-const coursesService = new CoursesService();
+const coursesService = new CoursesService(coursesRepository);
 const testsService = new TestsService();
 const logsService = new LogsService();
 

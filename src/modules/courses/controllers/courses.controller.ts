@@ -6,8 +6,8 @@ import {
   RequestBodyParams,
   RequestParams,
   RequestQuery,
-} from "../../types";
-import { CoursesService } from "./courses.service";
+} from "../../../types";
+import { CoursesService } from "../services/courses.service";
 import { ValidationError } from "express-validator";
 import {
   CourseCreateDTO,
@@ -15,7 +15,7 @@ import {
   CourseUpdateDTO,
   CourseURIParamsDTO,
   CourseViewDTO,
-} from "./courses.dto";
+} from "../dto";
 
 export class CoursesController {
   constructor(private coursesService: CoursesService) {}
@@ -38,7 +38,7 @@ export class CoursesController {
     res: Response<CourseViewDTO | ErrorResponse>,
   ) {
     const { id } = req.params;
-    const foundCourse = await this.coursesService.findCourseById(+id);
+    const foundCourse = await this.coursesService.findCourseById(id);
 
     if (!foundCourse) {
       res.status(HttpStatuses.NOT_FOUND).json({ message: "Course not found" });
@@ -63,7 +63,7 @@ export class CoursesController {
     >,
   ) {
     const { id } = req.params;
-    const updatedCourse = await this.coursesService.updateCourse(+id, req.body);
+    const updatedCourse = await this.coursesService.updateCourse(id, req.body);
 
     if (!updatedCourse) {
       res.status(HttpStatuses.NOT_FOUND).json({ message: "Course not found" });
@@ -78,7 +78,7 @@ export class CoursesController {
     res: Response<ErrorResponse | undefined>,
   ) {
     const { id } = req.params;
-    const isDeletedCourse = await this.coursesService.deleteCourse(+id);
+    const isDeletedCourse = await this.coursesService.deleteCourse(id);
 
     if (!isDeletedCourse) {
       res.status(HttpStatuses.NOT_FOUND).json({ message: "Course not found" });

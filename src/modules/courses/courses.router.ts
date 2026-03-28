@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { CoursesController } from "./courses.controller";
+import { CoursesController } from "./controllers/courses.controller";
 import { courseValidator } from "../../utils";
 import { authMiddleware, inputValidationMiddleware } from "../../middlewares";
 
