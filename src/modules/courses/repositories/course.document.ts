@@ -1,9 +1,8 @@
-import { ObjectId } from "mongodb";
+import { WithId } from "mongodb";
 
-export type CourseDocument = {
-  _id: ObjectId;
+export type CourseDocument = WithId<{
   id: string;
   title: string;
   price: number;
   studentsCount: number;
-};
+}>;

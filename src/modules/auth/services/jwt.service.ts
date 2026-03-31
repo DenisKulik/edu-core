@@ -1,11 +1,9 @@
 import jwt from "jsonwebtoken";
-import { UserDBType } from "../../types";
-import { settings } from "../../settings";
-import { ObjectId } from "mongodb";
+import { settings } from "../../../settings";
 
 export class JwtService {
-  async createJWT(user: UserDBType) {
-    const token = jwt.sign({ userId: user._id }, settings.JWT_SECRET, {
+  async createJWT(userId: string) {
+    const token = jwt.sign({ userId: userId }, settings.JWT_SECRET, {
       expiresIn: "1h",
     });
 
@@ -20,7 +18,7 @@ export class JwtService {
   async getUserIdByToken(token: string) {
     try {
       const result: any = jwt.verify(token, settings.JWT_SECRET);
-      return new ObjectId(result.userId);
+      return result.userId;
     } catch {
       return null;
     }

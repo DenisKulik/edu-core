@@ -1,7 +1,7 @@
 import { NextFunction, Request, Response } from "express";
 import { HttpStatuses } from "../types";
 import { JwtService } from "../modules/auth";
-import { UsersService } from "../modules/users";
+import { UsersRepository, UsersService } from "../modules/users";
 
 export const authMiddleware = async (
   req: Request,
@@ -19,8 +19,10 @@ export const authMiddleware = async (
   const userId = await jwtService.getUserIdByToken(token);
 
   if (userId) {
-    const usersService = new UsersService();
+    const usersRepository = new UsersRepository();
+    const usersService = new UsersService(usersRepository);
     const user = await usersService.findUserById(userId);
+
     req.user = user || undefined;
     return next();
   }

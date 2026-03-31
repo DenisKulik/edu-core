@@ -6,7 +6,7 @@ import {
   errorMiddleware,
 } from "./middlewares";
 import { registerEvents } from "./events";
-import { UsersService } from "./modules/users";
+import { UsersRepository, UsersService } from "./modules/users";
 import { JwtService } from "./modules/auth";
 import { AuthController, getAuthRouter } from "./modules/auth";
 import {
@@ -31,8 +31,9 @@ app.use(loggerMiddleware);
 app.use(jsonBodyMiddleware);
 
 const coursesRepository = new CoursesRepository();
+const usersRepository = new UsersRepository();
 
-const usersService = new UsersService();
+const usersService = new UsersService(usersRepository);
 const jwtService = new JwtService();
 const coursesService = new CoursesService(coursesRepository);
 const testsService = new TestsService();

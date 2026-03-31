@@ -1,10 +1,10 @@
-export type RegisterDTO = {
+export type UserCreateDTO = {
   login: string;
   email: string;
   password: string;
 };
 
-export type LoginDTO = {
+export type UserLoginDTO = {
   loginOrEmail: string;
   password: string;
 };

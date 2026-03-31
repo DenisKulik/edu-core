@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
-import { UserDBType } from "../types";
 import { Course } from "../modules/courses";
+import { User } from "../modules/users";
 
 const mongoUri = process.env.MONGO_URI;
 const mongoDbName = process.env.MONGO_DB_NAME;
@@ -20,7 +20,7 @@ const courseScheme = new mongoose.Schema({
   studentsCount: Number,
 });
 
-export const UserModel = mongoose.model<UserDBType>("users", userScheme);
+export const UserModel = mongoose.model<User>("users", userScheme);
 export const CourseModel = mongoose.model<Course>("courses", courseScheme);
 
 export const connectDB = async () => {

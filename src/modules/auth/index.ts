@@ -1,4 +1,4 @@
-export * from "./auth.controller";
-export * from "./auth.dto";
+export * from "./controllers";
+export * from "./services";
+export * from "../users/validation";
 export * from "./auth.router";
-export * from "./jwt.service";
