@@ -1,6 +1,4 @@
-export interface ITestsRepository {
-  clearCoursesDb(): void;
-}
+import { ITestsRepository } from "./tests.repository.interface";
 
 export class TestsRepository implements ITestsRepository {
   clearCoursesDb(): void {

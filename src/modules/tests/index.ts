@@ -1,2 +1,2 @@
-export * from "./tests.repository";
+export * from "./repositories/tests.repository";
 export * from "./tests.router";

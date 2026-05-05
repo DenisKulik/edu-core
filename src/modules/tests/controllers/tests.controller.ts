@@ -1,6 +1,6 @@
-import { Router, Request, Response } from "express";
-import { TestsService } from "./tests.service";
-import { HttpStatuses } from "../../types";
+import { Request, Response } from "express";
+import { TestsService } from "../services/tests.service";
+import { HttpStatuses } from "../../../types";
 
 export class TestsController {
   constructor(private testsService: TestsService) {}

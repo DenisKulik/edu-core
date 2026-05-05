@@ -1,11 +1,11 @@
-import { ITestsRepository, TestsRepository } from "./tests.repository";
+import { ITestsRepository } from "../repositories";
 
 export interface ICourseService {
   clearCoursesDb(): Promise<void>;
 }
 
 export class TestsService {
-  private repository: ITestsRepository = new TestsRepository();
+  constructor(private readonly repository: ITestsRepository) {}
 
   async clearCoursesDb(): Promise<void> {
     return this.repository.clearCoursesDb();
