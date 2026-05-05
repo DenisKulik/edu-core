@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { LogsController } from "./logs.controller";
+import { LogsController } from "./controllers/logs.controller";
 
 export const getLogsRouter = (controller: LogsController) => {
   const router = Router();

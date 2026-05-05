@@ -1,3 +1,3 @@
-export * from "./logs.controller";
+export * from "./controllers";
 export * from "./logs.router";
-export * from "./logs.service";
+export * from "./services";

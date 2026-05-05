@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
-import { LogsService } from "./logs.service";
-import { HttpStatuses } from "../../../types";
+import { LogsService } from "../services/logs.service";
+import { HttpStatuses } from "../../../../types";
 
 export class LogsController {
   constructor(private logsService: LogsService) {}

@@ -1,5 +1,10 @@
 import express, { Express } from "express";
-import { getTestsRouter, TestsRepository } from "./modules/tests";
+import {
+  getTestsRouter,
+  TestsController,
+  TestsRepository,
+  TestsService,
+} from "./modules/tests";
 import {
   loggerMiddleware,
   notFoundMiddleware,
@@ -15,8 +20,6 @@ import {
   CoursesService,
   getCoursesRouter,
 } from "./modules/courses";
-import { TestsService } from "./modules/tests/services/tests.service";
-import { TestsController } from "./modules/tests/controllers/tests.controller";
 import {
   getLogsRouter,
   LogsController,
