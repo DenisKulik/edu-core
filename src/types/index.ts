@@ -1,10 +1,10 @@
 import { Request } from "express";
-import { ObjectId, WithId } from "mongodb";
+import { UserViewDTO } from "../modules/users/dto/users.response.dto";
 
 declare global {
   namespace Express {
     export interface Request {
-      user?: UserDBType;
+      user?: UserViewDTO;
     }
   }
 }
@@ -13,22 +13,6 @@ export type RequestBody<T> = Request<{}, {}, T>;
 export type RequestParams<T> = Request<T>;
 export type RequestQuery<T> = Request<{}, {}, {}, T>;
 export type RequestBodyParams<TBody, TParams> = Request<TParams, {}, TBody>;
-
-export type Course = WithId<{
-  _id: ObjectId;
-  id: number;
-  title: string;
-  price: number;
-  studentsCount: number;
-}>;
-
-export type UserDBType = WithId<{
-  userName: string;
-  email: string;
-  passwordHash: string;
-  passwordSalt: string;
-  createdAt: Date;
-}>;
 
 export type ErrorResponse = {
   message: string;

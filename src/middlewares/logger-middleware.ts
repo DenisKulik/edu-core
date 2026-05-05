@@ -1,4 +1,5 @@
 import { Request, Response, NextFunction } from "express";
+import { writeLog } from "../utils";
 
 export const loggerMiddleware = (
   req: Request,
@@ -7,14 +8,10 @@ export const loggerMiddleware = (
 ) => {
   const start = Date.now();
 
-  console.log(`[${new Date().toISOString()}] ${req.method} ${req.originalUrl}`);
-
   res.on("finish", () => {
     const duration = Date.now() - start;
-
-    console.log(
-      `[${req.method}] ${req.originalUrl} - ${res.statusCode} - ${duration}ms`,
-    );
+    const logMessage = `${req.method} ${req.ip} ${req.url} ${res.statusCode} ${duration}ms`;
+    writeLog(logMessage);
   });
 
   next();
